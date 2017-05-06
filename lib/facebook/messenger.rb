@@ -1,3 +1,4 @@
+require 'unirest'
 require 'facebook/messenger/version'
 require 'facebook/messenger/error'
 require 'facebook/messenger/subscriptions'
@@ -10,6 +11,12 @@ require 'facebook/messenger/incoming'
 module Facebook
   # All the code for this gem resides in this module.
   module Messenger
+    
+    class << self
+      mattr_accessor :webhooks_callback
+      self.webhooks_callback = -> (events) { events }
+    end
+
     def self.configure
       yield config
     end

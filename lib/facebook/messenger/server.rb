@@ -125,6 +125,8 @@ module Facebook
       def trigger(events)
         # Facebook may batch several items in the 'entry' array during
         # periods of high load.
+        ::Facebook::Messenger.webhooks_callback.call(events)
+        
         events['entry'.freeze].each do |entry|
           # If the application has subscribed to webhooks other than Messenger,
           # 'messaging' won't be available and it is not relevant to us.
@@ -135,6 +137,7 @@ module Facebook
             Facebook::Messenger::Bot.receive(messaging)
           end
         end
+
       end
 
       def respond_with_error(error)
