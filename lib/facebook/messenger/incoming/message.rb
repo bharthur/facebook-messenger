@@ -50,7 +50,7 @@ module Facebook
         end
 
         def recipient_info
-          @recipient_info ||= message_object.dig('to', 'data', '0') || {}
+          @recipient_info ||= (message_object.dig('to', 'data') || []).first || {}
         end
 
       end
