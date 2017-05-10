@@ -49,6 +49,10 @@ module Facebook
           }).body
         end
 
+        def recipient_info
+          @recipient_info ||= message_object['to']
+        end
+
       end
     end
   end
