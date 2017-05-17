@@ -23,7 +23,7 @@ module Facebook
         end
         
         def scoped_sender_name
-          @scoped_sender_name = "#{scoped_sender_info['first_name']} #{scoped_sender_info['last_name']}"
+          @scoped_sender_name ||= "#{scoped_sender_info['first_name']} #{scoped_sender_info['last_name']}"
         end
         
       end
