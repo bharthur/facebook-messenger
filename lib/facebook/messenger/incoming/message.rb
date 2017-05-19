@@ -45,8 +45,12 @@ module Facebook
         def sender_info
           @sender_info ||= Unirest.get("https://graph.facebook.com/v2.6/#{message_object['from']['id']}", parameters: {
             access_token: access_token,
-            fields: "first_name,last_name,locale,timezone,gender"
+            fields: "first_name,last_name,locale,timezone,gender,last_ad_referral"
           }).body
+        end
+        
+        def ad_id
+          @ad_id ||= sender_info.dig("last_ad_referral", "ad_id")
         end
 
         def recipient_info
