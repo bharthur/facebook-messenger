@@ -15,12 +15,17 @@ module Facebook
         
         def scoped_sender_info
           @scoped_sender_info ||= Unirest.get("https://graph.facebook.com/v2.9/#{sender['id']}", parameters: {
-            access_token: access_token
+            access_token: access_token,
+            fields: "first_name,last_name,profile_pic,locale,timezone,gender,last_ad_referral"
           }).body
         end
         
         def scoped_sender_name
           @scoped_sender_name ||= "#{scoped_sender_info['first_name']} #{scoped_sender_info['last_name']}"
+        end
+        
+        def ad_id
+          @ad_id ||= scoped_sender_info.dig("last_ad_referral", "ad_id")
         end
 
         def recipient
