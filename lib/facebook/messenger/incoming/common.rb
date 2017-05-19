@@ -12,6 +12,16 @@ module Facebook
         def sender
           @messaging['sender']
         end
+        
+        def scoped_sender_info
+          @scoped_sender_info ||= Unirest.get("https://graph.facebook.com/v2.9/#{sender['id']}", parameters: {
+            access_token: access_token
+          }).body
+        end
+        
+        def scoped_sender_name
+          @scoped_sender_name ||= "#{scoped_sender_info['first_name']} #{scoped_sender_info['last_name']}"
+        end
 
         def recipient
           @messaging['recipient']
